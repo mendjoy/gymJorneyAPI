@@ -1,4 +1,4 @@
-package io.github.mendjoy.gymJorneyAPI;
+package io.github.mendjoy.gymJourneyAPI;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
