@@ -1,11 +1,11 @@
-package io.github.mendjoy.gymJourneyAPI.dto;
+package io.github.mendjoy.gymJourneyAPI.dto.user;
 
-public class UserAuthDTO {
+public class UserLoginDTO {
 
     private String email;
     private String password;
 
-    public UserAuthDTO(String email, String password) {
+    public UserLoginDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }

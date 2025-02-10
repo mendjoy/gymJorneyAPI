@@ -1,4 +1,4 @@
-package io.github.mendjoy.gymJourneyAPI.dto;
+package io.github.mendjoy.gymJourneyAPI.dto.user;
 
 import io.github.mendjoy.gymJourneyAPI.entity.user.UserRole;
 
