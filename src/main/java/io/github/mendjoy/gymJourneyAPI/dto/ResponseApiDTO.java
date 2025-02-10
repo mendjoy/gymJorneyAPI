@@ -1,7 +1,9 @@
 package io.github.mendjoy.gymJourneyAPI.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseApiDTO {
 
     private HttpStatus status;
