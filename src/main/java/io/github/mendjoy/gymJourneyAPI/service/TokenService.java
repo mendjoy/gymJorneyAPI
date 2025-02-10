@@ -26,6 +26,7 @@ public class TokenService {
             return JWT.create()
                       .withIssuer("gymJourneyAPI")
                       .withSubject(user.getUsername())
+                      .withClaim("id", user.getId())
                       .withExpiresAt(generateExpirationDate())
                       .sign(algorithm);
         } catch (JWTCreationException exception) {

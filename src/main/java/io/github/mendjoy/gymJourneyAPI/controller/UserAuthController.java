@@ -1,34 +1,36 @@
 package io.github.mendjoy.gymJourneyAPI.controller;
 
-import io.github.mendjoy.gymJourneyAPI.dto.UserAuthenticationDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.ResponseApiDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.UserAuthDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.UserLoginDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.UserRegisterDTO;
+import io.github.mendjoy.gymJourneyAPI.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("auth")
-public class AuthenticationController {
+@RequestMapping("/auth")
+public class UserAuthController {
+
+    @Autowired
+    private UserAuthService userAuthService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody UserAuthenticationDTO userAuthenticationDTO){
-        UsernamePasswordAuthenticationToken usernamePasswordToken = new UsernamePasswordAuthenticationToken(userAuthenticationDTO.getEmail(), userAuthenticationDTO.getPassword());
-        authenticationManager.authenticate(usernamePasswordToken);
-
-        return ResponseEntity.ok().build();
-
+    public ResponseEntity<ResponseApiDTO> login(@RequestBody UserLoginDTO userLoginDTO){
+        UserAuthDTO userAuthDTO = userAuthService.authenticate(userLoginDTO.getEmail(), userLoginDTO.getPassword());
+        return ResponseEntity.ok(ResponseApiDTO.success(HttpStatus.OK, userAuthDTO));
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody ){
-
+    public ResponseEntity<ResponseApiDTO> register(@RequestBody UserRegisterDTO userRegisterDTO){
+        UserAuthDTO userAuthDTO = userAuthService.register(userRegisterDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ResponseApiDTO.success(HttpStatus.CREATED, userAuthDTO));
     }
 
 }

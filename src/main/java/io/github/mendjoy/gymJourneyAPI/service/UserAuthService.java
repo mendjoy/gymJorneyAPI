@@ -1,43 +1,66 @@
 package io.github.mendjoy.gymJourneyAPI.service;
 
-import io.github.mendjoy.gymJourneyAPI.dto.UserAuthenticationDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.UserAuthDTO;
 import io.github.mendjoy.gymJourneyAPI.dto.UserRegisterDTO;
 import io.github.mendjoy.gymJourneyAPI.entity.user.User;
+import io.github.mendjoy.gymJourneyAPI.entity.user.UserRole;
 import io.github.mendjoy.gymJourneyAPI.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-public class UserAuthorizationService implements UserDetailsService {
+@Service
+public class UserAuthService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final TokenService tokenService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    public UserAuthService(UserRepository userRepository, TokenService tokenService, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.tokenService = tokenService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username);
     }
 
-    public void authenticate(UserAuthenticationDTO authenticationDTO){
-        UsernamePasswordAuthenticationToken usernamePasswordToken = new UsernamePasswordAuthenticationToken(authenticationDTO.getEmail(), authenticationDTO.getPassword());
-        authenticationManager.authenticate(usernamePasswordToken);
+    public UserAuthDTO authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email);
+
+        if(user == null){
+            throw new UsernameNotFoundException("Email não cadastrado!");
+        }
+
+        if(!passwordEncoder.matches(password, user.getPassword())){
+            throw new BadCredentialsException("Senha incorreta!");
+        }
+
+        String token = tokenService.generateToken(user);
+
+        return new UserAuthDTO(user.getId(), user.getName(), user.getUsername(),user.getRole(), token);
+
     }
 
-    public void register(UserRegisterDTO userRegisterDTO){
+    public UserAuthDTO register(UserRegisterDTO userRegisterDTO){
         if(userRepository.existsByEmail(userRegisterDTO.getEmail())){
-
+            throw new BadCredentialsException("E-mail já cadastrado.");
         }
         String encryptPassword = new BCryptPasswordEncoder().encode(userRegisterDTO.getPassword());
-        User newUser = new User(userRegisterDTO.getEmail(), userRegisterDTO.getName(), userRegisterDTO.getPassword());
+        User newUser = new User(userRegisterDTO.getEmail(),
+                                userRegisterDTO.getName(),
+                                passwordEncoder.encode(userRegisterDTO.getPassword()),
+                                UserRole.USER);
 
         userRepository.save(newUser);
+
+        return authenticate(userRegisterDTO.getEmail(), userRegisterDTO.getPassword());
     }
+
 }
