@@ -50,11 +50,11 @@ public class ResponseApiDTO {
         this.message = message;
     }
 
-    public boolean isSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
-    public void setError(boolean success) {
+    public void setSuccess(boolean success) {
         this.success = success;
     }
 
