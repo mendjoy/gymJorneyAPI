@@ -1,9 +1,6 @@
 package io.github.mendjoy.gymJourneyAPI.entity.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,9 +17,18 @@ public class User implements UserDetails {
     private String email;
     private String name;
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     public User() {
+    }
+
+    public User(String email, String name, String password, UserRole role ){
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.role = role;
     }
 
     public User(Integer id, String email, String name, String password, UserRole role) {
@@ -58,6 +64,10 @@ public class User implements UserDetails {
         }
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
     public void setRole(UserRole role) {
         this.role = role;
     }
@@ -79,6 +89,6 @@ public class User implements UserDetails {
     public void setUsername(String username) {
         this.email = username;
     }
-    
+
 }
 
