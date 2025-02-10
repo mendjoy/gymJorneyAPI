@@ -1,6 +1,6 @@
 package io.github.mendjoy.gymJourneyAPI.exception;
 
-import io.github.mendjoy.gymJourneyAPI.dto.ResponseApiDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.response.ResponseApiDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
