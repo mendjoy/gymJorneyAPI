@@ -1,9 +1,9 @@
 package io.github.mendjoy.gymJourneyAPI.controller;
 
-import io.github.mendjoy.gymJourneyAPI.dto.ResponseApiDTO;
-import io.github.mendjoy.gymJourneyAPI.dto.UserAuthDTO;
-import io.github.mendjoy.gymJourneyAPI.dto.UserLoginDTO;
-import io.github.mendjoy.gymJourneyAPI.dto.UserRegisterDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.response.ResponseApiDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.user.UserAuthDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.user.UserLoginDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.user.UserRegisterDTO;
 import io.github.mendjoy.gymJourneyAPI.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

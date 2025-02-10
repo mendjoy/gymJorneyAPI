@@ -1,7 +1,7 @@
 package io.github.mendjoy.gymJourneyAPI.service;
 
-import io.github.mendjoy.gymJourneyAPI.dto.UserAuthDTO;
-import io.github.mendjoy.gymJourneyAPI.dto.UserRegisterDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.user.UserAuthDTO;
+import io.github.mendjoy.gymJourneyAPI.dto.user.UserRegisterDTO;
 import io.github.mendjoy.gymJourneyAPI.entity.user.User;
 import io.github.mendjoy.gymJourneyAPI.entity.user.UserRole;
 import io.github.mendjoy.gymJourneyAPI.repository.UserRepository;
