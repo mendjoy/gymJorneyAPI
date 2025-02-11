@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,8 @@ public class User implements UserDetails {
     private Integer id;
     private String email;
     private String name;
+    private String phone;
+    private Date birth_date;
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -24,9 +27,11 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String email, String name, String password, UserRole role ){
+    public User(String email, String name, String phone, Date birth_date, String password, UserRole role ){
         this.email = email;
         this.name = name;
+        this.phone = phone;
+        this.birth_date = birth_date;
         this.password = password;
         this.role = role;
     }
@@ -53,6 +58,22 @@ public class User implements UserDetails {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Date getBirth_date() {
+        return birth_date;
+    }
+
+    public void setBirth_date(Date birth_date) {
+        this.birth_date = birth_date;
     }
 
     @Override

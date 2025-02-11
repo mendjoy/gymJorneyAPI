@@ -55,6 +55,8 @@ public class UserAuthService implements UserDetailsService {
         String encryptPassword = new BCryptPasswordEncoder().encode(userRegisterDTO.getPassword());
         User newUser = new User(userRegisterDTO.getEmail(),
                                 userRegisterDTO.getName(),
+                                userRegisterDTO.getPhone(),
+                                userRegisterDTO.getBirth_date(),
                                 passwordEncoder.encode(userRegisterDTO.getPassword()),
                                 UserRole.USER);
 
