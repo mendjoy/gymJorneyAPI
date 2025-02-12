@@ -52,7 +52,7 @@ public class UserAuthService implements UserDetailsService {
         if(userRepository.existsByEmail(userRegisterDTO.getEmail())){
             throw new BadCredentialsException("E-mail já cadastrado.");
         }
-        String encryptPassword = new BCryptPasswordEncoder().encode(userRegisterDTO.getPassword());
+
         User newUser = new User(userRegisterDTO.getEmail(),
                                 userRegisterDTO.getName(),
                                 userRegisterDTO.getPhone(),

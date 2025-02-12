@@ -26,6 +26,10 @@ public class ResponseApiDTO {
         this.data = data;
     }
 
+    public static ResponseApiDTO success(HttpStatus status, String message) {
+        return new ResponseApiDTO(status, message, true);
+    }
+
     public static ResponseApiDTO success(HttpStatus status, Object data) {
         return new ResponseApiDTO(status, true, data);
     }

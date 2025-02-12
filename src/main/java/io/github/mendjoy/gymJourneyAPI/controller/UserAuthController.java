@@ -32,5 +32,4 @@ public class UserAuthController {
         UserAuthDTO userAuthDTO = userAuthService.register(userRegisterDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(ResponseApiDTO.success(HttpStatus.CREATED, userAuthDTO));
     }
-
 }
