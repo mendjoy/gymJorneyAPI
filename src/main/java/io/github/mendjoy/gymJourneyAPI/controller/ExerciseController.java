@@ -21,6 +21,6 @@ public class ExerciseController {
     @PostMapping
     public ResponseEntity<ResponseApiDTO> register(@RequestBody ExerciseDTO exerciseDTO){
         ExerciseDTO newExercise = exerciseService.register(exerciseDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ResponseApiDTO.success(HttpStatus.CREATED, exerciseDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ResponseApiDTO.success(HttpStatus.CREATED, newExercise));
     }
 }
