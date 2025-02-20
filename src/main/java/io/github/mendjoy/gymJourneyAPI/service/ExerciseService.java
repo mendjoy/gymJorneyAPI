@@ -6,6 +6,8 @@ import io.github.mendjoy.gymJourneyAPI.repository.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ExerciseService {
 
@@ -27,5 +29,13 @@ public class ExerciseService {
                                savedExercise.getName(),
                                savedExercise.getDescription(),
                                savedExercise.getMuscle_group());
+    }
+
+    public ExerciseDTO getExerciseById(Integer id){
+        Exercise exercise = exerciseRepository.findById(id).orElseThrow(() -> new RuntimeException("Exercicio não encontrado!"));
+        return new ExerciseDTO(exercise.getId(),
+                               exercise.getName(),
+                               exercise.getDescription(),
+                               exercise.getMuscle_group());
     }
 }
