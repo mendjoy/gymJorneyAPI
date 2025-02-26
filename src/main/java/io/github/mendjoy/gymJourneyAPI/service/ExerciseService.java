@@ -49,4 +49,14 @@ public class ExerciseService {
                                                                     exercise.getDescription(),
                                                                     exercise.getMuscle_group()));
     }
+
+    public Page<ExerciseDTO> searchExercisesByName(String name, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Exercise> exercisePage = exerciseRepository.findByNameContainingIgnoreCase(name, pageable);
+        return exercisePage.map(exercise -> new ExerciseDTO(exercise.getId(),
+                                                                    exercise.getName(),
+                                                                    exercise.getDescription(),
+                                                                    exercise.getMuscle_group()));
+
+    }
 }

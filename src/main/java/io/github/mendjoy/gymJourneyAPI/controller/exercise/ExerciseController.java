@@ -32,8 +32,14 @@ public class ExerciseController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseApiDTO> getAllExercises( @RequestParam(defaultValue = "0") int page,  @RequestParam(defaultValue = "10") int size){
+    public ResponseEntity<ResponseApiDTO> getAllExercises(@RequestParam(defaultValue = "0") int page,  @RequestParam(defaultValue = "10") int size){
         Page<ExerciseDTO> exerciseDTOS = exerciseService.getAllExercises(page, size);
+        return ResponseEntity.ok(ResponseApiDTO.success(HttpStatus.OK, exerciseDTOS));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ResponseApiDTO> searchExercisesByName(@RequestParam String name,@RequestParam(defaultValue = "0") int page,  @RequestParam(defaultValue = "10") int size ){
+        Page<ExerciseDTO> exerciseDTOS = exerciseService.searchExercisesByName(name, page, size);
         return ResponseEntity.ok(ResponseApiDTO.success(HttpStatus.OK, exerciseDTOS));
     }
 }
